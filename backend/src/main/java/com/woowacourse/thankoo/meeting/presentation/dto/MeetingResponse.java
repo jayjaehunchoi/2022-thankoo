@@ -1,7 +1,7 @@
 package com.woowacourse.thankoo.meeting.presentation.dto;
 
+import com.woowacourse.thankoo.common.dto.TimeResponse;
 import com.woowacourse.thankoo.meeting.domain.MeetingCoupon;
-import java.time.LocalDateTime;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,23 +11,23 @@ import lombok.NoArgsConstructor;
 public class MeetingResponse {
 
     private Long id;
-    private LocalDateTime meetingTime;
+    private TimeResponse time;
     private String couponType;
     private String memberName;
 
-    public MeetingResponse(final Long id,
-                           final LocalDateTime meetingTime,
-                           final String couponType,
-                           final String memberName) {
+    private MeetingResponse(final Long id,
+                            final TimeResponse time,
+                            final String couponType,
+                            final String memberName) {
         this.id = id;
-        this.meetingTime = meetingTime;
+        this.time = time;
         this.couponType = couponType;
         this.memberName = memberName;
     }
 
     public static MeetingResponse of(final MeetingCoupon meetingCoupon) {
         return new MeetingResponse(meetingCoupon.getId(),
-                meetingCoupon.getMeetingTime().getTime(),
+                TimeResponse.of(meetingCoupon.getMeetingTime()),
                 meetingCoupon.getCouponType(),
                 meetingCoupon.getMemberName());
     }

@@ -1,7 +1,7 @@
 package com.woowacourse.thankoo.reservation.presentation.dto;
 
+import com.woowacourse.thankoo.common.dto.TimeResponse;
 import com.woowacourse.thankoo.reservation.domain.ReservationCoupon;
-import java.time.LocalDateTime;
 import java.util.Locale;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -14,22 +14,22 @@ public class ReservationResponse {
     private Long reservationId;
     private String memberName;
     private String couponType;
-    private LocalDateTime meetingTime;
+    private TimeResponse time;
 
     private ReservationResponse(final Long reservationId,
                                 final String memberName,
                                 final String couponType,
-                                final LocalDateTime meetingTime) {
+                                final TimeResponse time) {
         this.reservationId = reservationId;
         this.memberName = memberName;
         this.couponType = couponType.toLowerCase(Locale.ROOT);
-        this.meetingTime = meetingTime;
+        this.time = time;
     }
 
     public static ReservationResponse from(final ReservationCoupon reservationCoupon) {
         return new ReservationResponse(reservationCoupon.getReservationId(),
                 reservationCoupon.getMemberName(),
                 reservationCoupon.getCouponType(),
-                reservationCoupon.getMeetingTime());
+                TimeResponse.from(reservationCoupon.getMeetingTime(), reservationCoupon.getTimeZone()));
     }
 }
